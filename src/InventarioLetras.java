@@ -4,6 +4,11 @@ public class InventarioLetras {
     private int nonZeroCount;
 
     public InventarioLetras(String data){
+        if(data == null){
+            throw new IllegalArgumentException("El texto no puede ser null");
+        }
+
+
         inventario = new int[26];                                   //Cada posicion representa una letra
         totalCount = 0;
         nonZeroCount = 0;
@@ -12,7 +17,7 @@ public class InventarioLetras {
         for(int i = 0; i < data.length(); i ++){
             char c = Character.toLowerCase(data.charAt(i));
 
-            if(c >= 'a' && c <= 'z'){                                                  //Filtro de letras
+            if(esLetraValida(c)){                                                  //Filtro de letras
                 int indice = c - 'a';                                  //Calculo posicion dentro del arreglo usando el valor ASCII de los caracteres(al restarle 'a' se obtienen indices de 0 a 25)
 
                 //Cuenta letras distintas
@@ -25,17 +30,17 @@ public class InventarioLetras {
             }
         }
     }
+    private boolean esLetraValida(char c){
+        return c >= 'a' && c <= 'z';
+    }
+
 
     public int size(){
         return totalCount;
     }
 
     public boolean isEmpty(){
-        if (nonZeroCount == 0){
-            return true;
-        }else{
-            return false;
-        }
+        return nonZeroCount == 0;
     }
 
     //Verificar si el caracter es valido, si no lo es lanza un error
@@ -43,7 +48,8 @@ public class InventarioLetras {
         char c = Character.toLowerCase(letra);
         if (c < 'a' || c > 'z'){
             throw new IllegalArgumentException("Caracter invalido: '" + letra + "' Solo se aceptan letras del alfabeto ingles (a-z)." );
-        }return c;
+        }
+        return c;
     }
 
     public int get(char letra){
@@ -51,15 +57,54 @@ public class InventarioLetras {
         return inventario [c - 'a'];
     }
 
+    @Override
     public String toString(){
-        StringBuilder resultado = new StringBuilder();
-        resultado.append("[");
+        StringBuilder resultado = new StringBuilder("[");
 
         for (int i = 0; i < 26 ; i++){
                 for(int j = 0; j < inventario[i]; j++ ){
                 resultado.append((char) ('a' + i));
             }
-        }   resultado.append("]");
+        }
+        resultado.append("]");
         return resultado.toString();
+    }
+
+    private char cifrarCesar(char letra, int desplazamiento){
+        char c = validarLetra(letra);
+        return (char)('a' + (c - 'a' + desplazamiento + 26) % 26);
+    }
+
+    public char encriptarCesar(char letra){
+        return cifrarCesar(letra, 3);
+    }
+
+    public char desencriptarCesar(char letra){
+        return cifrarCesar(letra, -3);
+    }
+
+    private String cifrarPalabra(String palabra, int desplazamiento){
+        if (palabra == null){
+            throw new IllegalArgumentException("La palabra no puede ser null.");
+        }
+
+
+        StringBuilder resultado = new StringBuilder();
+        for (int i = 0; i < palabra.length(); i++){
+            char c = Character.toLowerCase(palabra.charAt(i));
+            if (esLetraValida(c)){
+                resultado.append(cifrarCesar(c, desplazamiento));
+            } else {
+                resultado.append(c);
+            }
+        }
+        return resultado.toString();
+    }
+
+    public String encriptarPalabra(String palabra, int desplazamiento){
+        return cifrarPalabra(palabra, desplazamiento);
+    }
+    public String desencriptarPalabra(String palabra, int desplazamiento){
+        return cifrarPalabra(palabra, - desplazamiento);
     }
 }

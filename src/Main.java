@@ -94,6 +94,63 @@ public class Main {
         separador("Caso 17. String vacio ");
         System.out.println(n.encriptarPalabra("", 3)); // vacio
 
+        // ---------------------- Etapa 4 ----------------------
+
+        // Se trabaja con nuevo inventario para probar set dado que este modifica el estado interno del mismo.
+
+        InventarioLetras pruebaSet = new InventarioLetras("casa");
+
+        separador("Etapa Set. Caso 1- Cambiar valores de letras existentes.");
+        System.out.println("Antes de set ('a', 5): " + pruebaSet);
+        System.out.println("size antes: " + pruebaSet.size());
+        pruebaSet.set('a', 5);
+        System.out.println("Despues de set ('a', 5): " + pruebaSet);
+        System.out.println("get('a'): " + pruebaSet.get('a'));
+        System.out.println("size despues: " + pruebaSet.size());
+
+        separador("Etapa Set. Caso 2 - Agregar letra q no existe en el inventario.");
+        pruebaSet.set('z', 4);
+        System.out.println("Despues de set ('z',4); " + pruebaSet);
+        System.out.println("get('z'): " + pruebaSet.get('z'));
+        System.out.println("size actual: " + pruebaSet.size());
+
+        separador("Etapa Set. Caso 3 - Reducir letra a 0");
+        pruebaSet.set('c', 0);
+        System.out.println("Despues de set('c', 0): " + pruebaSet);
+        System.out.println("get('c'): " + pruebaSet.get('c'));
+        System.out.println("isEmpty(): " + pruebaSet.isEmpty());
+
+        separador("Etapa Set. Caso 4 - Error por valor negativo.");
+        try{
+            pruebaSet.set('a', -1);
+        }catch (IllegalArgumentException e){
+            System.out.println("Error capturado: " + e.getMessage());
+        }
+
+        separador("Etapa Set. Caso 5 - Error caracter invalido ");
+        try{
+            pruebaSet.set('!', 3);
+        }catch (IllegalArgumentException e){
+            System.out.println("Error capturado: " + e.getMessage());
+        }
+
+        separador("Etapa Set. Caso 6 - Set con mayuscula");
+        pruebaSet.set('A', 10);
+        System.out.println("get('a') tras set ('A', 10): " + pruebaSet.get('a'));
+        System.out.println("Inventario final: " + pruebaSet);
+
+        separador("Etapa Set. Caso 7 - Vaciar inventario usando set.");
+        InventarioLetras setVacio = new InventarioLetras("x");
+
+        System.out.println("Antes: " + setVacio);
+        setVacio.set('x', 0 );
+        System.out.println("Despues: " + setVacio);
+        System.out.println("size: " + setVacio.size());
+        System.out.println("isEmpty(): " + setVacio.isEmpty());
+
+
+
+
 
 
 

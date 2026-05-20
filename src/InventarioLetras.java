@@ -61,7 +61,7 @@ public class InventarioLetras {
     public String toString(){
         StringBuilder resultado = new StringBuilder("[");
 
-        for (int i = 0; i < 26 ; i++){
+        for (int i = 0; i < inventario.length ; i++){
                 for(int j = 0; j < inventario[i]; j++ ){
                 resultado.append((char) ('a' + i));
             }
@@ -106,5 +106,29 @@ public class InventarioLetras {
     }
     public String desencriptarPalabra(String palabra, int desplazamiento){
         return cifrarPalabra(palabra, - desplazamiento);
+    }
+
+    public void set(char letra, int cantidad){
+        char c = validarLetra(letra);
+
+        if (cantidad < 0 ){
+            throw new IllegalArgumentException("EL valor no puede ser negativo.");
+        }
+
+        int indice = c - 'a';
+        int cantidadAnterior = inventario[indice];
+
+        if (cantidadAnterior == cantidad){
+            return;
+        }
+
+        if(cantidad > 0 && cantidadAnterior == 0 ){
+            nonZeroCount++;
+        }else if (cantidad == 0 && cantidadAnterior > 0 ){
+            nonZeroCount--;
+        }
+
+        totalCount += cantidad - cantidadAnterior;
+        inventario[indice] = cantidad;
     }
 }

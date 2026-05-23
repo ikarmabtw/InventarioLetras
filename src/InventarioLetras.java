@@ -17,16 +17,9 @@ public class InventarioLetras {
         for(int i = 0; i < data.length(); i ++){
             char c = Character.toLowerCase(data.charAt(i));
 
-            if(esLetraValida(c)){                                                  //Filtro de letras
+            if(esLetraValida(c)) {                                                  //Filtro de letras
                 int indice = c - 'a';                                  //Calculo posicion dentro del arreglo usando el valor ASCII de los caracteres(al restarle 'a' se obtienen indices de 0 a 25)
-
-                //Cuenta letras distintas
-                if(inventario[indice] == 0){
-                    nonZeroCount++;
-                }
-
-                inventario[indice]++;
-                totalCount++;
+                actualizarContadores(indice, inventario[indice] + 1);
             }
         }
     }
@@ -53,8 +46,8 @@ public class InventarioLetras {
     }
 
     public int get(char letra){
-        char c = validarLetra(letra);
-        return inventario [c - 'a'];
+        int indice = obtenerIndice(letra);
+        return inventario [indice];
     }
 
     @Override
@@ -72,7 +65,7 @@ public class InventarioLetras {
 
     private char cifrarCesar(char letra, int desplazamiento){
         char c = validarLetra(letra);
-        return (char)('a' + (c - 'a' + desplazamiento + 26) % 26);
+        return (char)('a' + Math.floorMod(c - 'a' + desplazamiento, 26));
     }
 
     public char encriptarCesar(char letra){
@@ -109,26 +102,33 @@ public class InventarioLetras {
     }
 
     public void set(char letra, int cantidad){
-        char c = validarLetra(letra);
+        int indice = obtenerIndice(letra);
+        actualizarContadores(indice, cantidad);
+    }
 
-        if (cantidad < 0 ){
-            throw new IllegalArgumentException("EL valor no puede ser negativo.");
+    private void actualizarContadores (int indice, int nuevaCantidad){
+        if(nuevaCantidad < 0 ){
+            throw new IllegalArgumentException("El valor no puede ser negativo." );
         }
 
-        int indice = c - 'a';
         int cantidadAnterior = inventario[indice];
 
-        if (cantidadAnterior == cantidad){
+        if(cantidadAnterior == nuevaCantidad){
             return;
         }
 
-        if(cantidad > 0 && cantidadAnterior == 0 ){
+        if (cantidadAnterior == 0 ){
             nonZeroCount++;
-        }else if (cantidad == 0 && cantidadAnterior > 0 ){
+        }else if (nuevaCantidad == 0 ){
             nonZeroCount--;
         }
 
-        totalCount += cantidad - cantidadAnterior;
-        inventario[indice] = cantidad;
+        totalCount+= nuevaCantidad - cantidadAnterior;
+        inventario[indice] = nuevaCantidad;
+    }
+
+    private int obtenerIndice(char letra){
+        char c = validarLetra(letra);
+        return c - 'a';
     }
 }

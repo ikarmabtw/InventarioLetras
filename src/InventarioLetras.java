@@ -131,4 +131,53 @@ public class InventarioLetras {
         char c = validarLetra(letra);
         return c - 'a';
     }
+
+    public InventarioLetras add(InventarioLetras sumando){
+        if(sumando == null){
+            throw new IllegalArgumentException("El inventario a sumar no puede ser null.");
+        }
+
+        InventarioLetras inventarioFinal = new InventarioLetras("");
+
+        for(int i = 0; i < inventario.length; i++){
+            inventarioFinal.actualizarContadores(i, inventario[i] + sumando.inventario[i]);
+        }
+
+        return inventarioFinal;
+    }
+
+    public InventarioLetras amplifies(int n){
+        if(n < 0){
+            throw new IllegalArgumentException("El valor no puede ser negativo.");
+        }
+
+        InventarioLetras inventarioFinal = new InventarioLetras("");
+
+        for(int i = 0; i < inventario.length; i++){
+            inventarioFinal.actualizarContadores(i, inventario[i] * n);
+        }
+
+        return inventarioFinal;
+    }
+
+    public InventarioLetras subtract(InventarioLetras restando){
+        if (restando == null){
+            throw new IllegalArgumentException("El inventario a restar no puede ser null.");
+        }
+
+        InventarioLetras inventarioFinal = new InventarioLetras("");
+
+        for(int i = 0; i < inventario.length; i++){
+            int diferencia = inventario[i] - restando.inventario[i];
+
+            if (diferencia < 0) {
+                return null;
+            }
+
+            inventarioFinal.actualizarContadores(i, diferencia);
+        }
+
+        return inventarioFinal;
+    }
+
 }

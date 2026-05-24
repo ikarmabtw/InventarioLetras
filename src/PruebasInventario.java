@@ -57,7 +57,7 @@ public class PruebasInventario{
         System.out.println("desencriptarCesar ('d') : " + n.desencriptarCesar('d')); // a
         System.out.println("desencriptarCesar ('a') : " + n.desencriptarCesar('a')); // x
 
-        separador("Caso 9. desencriptar char invalido - Error.");
+        separador("Caso 9. encriptar char invalido - Error.");
         try{
             n.encriptarCesar('3');
 
@@ -113,7 +113,7 @@ public class PruebasInventario{
         System.out.println("get('z'): " + pruebaSet.get('z'));
         System.out.println("size actual: " + pruebaSet.size());
 
-        separador("Etapa Set. Caso 3 - Reducir letra a 0");
+        separador("Etapa Set. Caso 3 - Reducir letra a 0.");
         pruebaSet.set('c', 0);
         System.out.println("Despues de set('c', 0): " + pruebaSet);
         System.out.println("get('c'): " + pruebaSet.get('c'));
@@ -133,7 +133,7 @@ public class PruebasInventario{
             System.out.println("Error capturado: " + e.getMessage());
         }
 
-        separador("Etapa Set. Caso 6 - Set con mayuscula");
+        separador("Etapa Set. Caso 6 - Set con mayuscula.");
         pruebaSet.set('A', 10);
         System.out.println("get('a') tras set ('A', 10): " + pruebaSet.get('a'));
         System.out.println("Inventario final: " + pruebaSet);
@@ -147,7 +147,111 @@ public class PruebasInventario{
         System.out.println("size: " + setVacio.size());
         System.out.println("isEmpty(): " + setVacio.isEmpty());
 
+        // ---------------------- Etapa 5 ----------------------
+
+        separador("Etapa 5. Caso 1 - add con dos inventarios.");
+        InventarioLetras inventario1 = new InventarioLetras("xxyyzz");
+        InventarioLetras inventario2 = new InventarioLetras("aabb");
+
+        InventarioLetras suma = inventario1.add(inventario2);
+
+        System.out.println("Inventario 1: " + inventario1);
+        System.out.println("Inventario 2: " + inventario2);
+        System.out.println("suma: " + suma);
+        System.out.println("size post suma: " + suma.size());
+
+        // se comprueba que el add no modifique los inventarios originales
+        System.out.println("Comprobacion Inventario 1: " + inventario1);
+        System.out.println("Comprobacion Inventario 2: " + inventario2);
+
+        separador("Etapa 5. Caso 2 - amplifies con factor 3.");
+        InventarioLetras inventarioAmp = new InventarioLetras("brr");
+        InventarioLetras amplificado = inventarioAmp.amplifies(3);
+
+        System.out.println("Original: " + inventarioAmp);
+        System.out.println("Amplifies (3): " + amplificado);
+        System.out.println("size amplificado: " + amplificado.size());
+
+        separador("Etapa 5. Caso 3 - amplifies con 0 deja inventario vacio.");
+        InventarioLetras inventarioAmpCero = inventarioAmp.amplifies(0);
+
+        System.out.println("Original: " + inventarioAmp);
+        System.out.println("Amplifies (0): " + inventarioAmpCero);
+        System.out.println("size: " + inventarioAmpCero.size());
+        System.out.println("isEmpty(): " + inventarioAmpCero.isEmpty());
+
+        separador("Etapa 5. Caso 4 - amplifies negativo lanza error.");
+        try{
+            inventarioAmp.amplifies(-1);
+        }catch(IllegalArgumentException e){
+            System.out.println("Error capturado: " + e.getMessage());
+        }
+
+        separador("Etapa 5. Caso 5 - subtract resta correctamente.");
+        InventarioLetras inventarioSub = new InventarioLetras("qqwweerrttyy");
+        InventarioLetras inventarioSub2 = new InventarioLetras("qwerty");
+
+        InventarioLetras resta = inventarioSub.subtract(inventarioSub2);
+
+        System.out.println("Inventario Sub 1: " + inventarioSub);
+        System.out.println("Inventario Sub 2: " + inventarioSub2);
+        System.out.println("resta: " + resta);
+        System.out.println("size post resta: " + resta.size());
+
+        separador("Etapa 5. Caso 6 - subtract return null si queda negativo.");
+
+        InventarioLetras inventarioSub3 = new InventarioLetras("miau");
+        InventarioLetras inventarioSub4 = new InventarioLetras("uuuu");
+
+        InventarioLetras restaNull = inventarioSub3.subtract(inventarioSub4);
+
+        System.out.println("Resta Invalida: " + restaNull);
+
+        // se comprueba que el subtract no modifique los inventarios originales
+        System.out.println("Comprobacion Inventario 3: " + inventarioSub3);
+        System.out.println("Comprobacion Inventario 4: " + inventarioSub4);
+
+        separador("Etapa 5. Caso 7 - add con null lanza error.");
+            try{
+                inventarioSub.add(null);
+            }catch(IllegalArgumentException e){
+                System.out.println("Error capturado: " + e.getMessage());
+            }
+
+
+        separador("Etapa 5. Caso 8 - subtract con null lanza error.");
+        try{
+            inventarioSub.subtract(null);
+        }catch(IllegalArgumentException e){
+            System.out.println("Error capturado: " + e.getMessage());
+        }
+
+        separador("Etapa 5. Caso 9 - add con inventario vacio.");
+        InventarioLetras inventarioVacio = new InventarioLetras("");
+        InventarioLetras sumaVacio = inventarioSub.add(inventarioVacio);
+
+        System.out.println("Original: " + inventarioSub);
+        System.out.println("Inventario vacio Original: " + inventarioVacio);
+        System.out.println("Resultado: " + sumaVacio);
+
+        separador("Etapa 5. Caso 10 - subtract de inventario igual retorna vacio.");
+        InventarioLetras inventarioIgual = new InventarioLetras("DRY");
+        InventarioLetras inventarioIgual2 = new InventarioLetras("DRY");
+
+        InventarioLetras restaInventariosIguales = inventarioIgual.subtract(inventarioIgual2);
+
+        System.out.println("Resta igual: " + restaInventariosIguales);
+        System.out.println("isEmpty(): " + restaInventariosIguales.isEmpty());
+
+
+        separador("Etapa 5. Caso 11 - amplifies con 1 no cambia nada.");
+        InventarioLetras inventarioAmplificadoPor1 = inventarioAmp.amplifies(1);
+
+        System.out.println("ORIGINAL: " + inventarioAmp);
+        System.out.println("RESULTADO: " + inventarioAmplificadoPor1);
+
     }
+
     public static void separador(String titulo) {
         System.out.println("\n===============");
         System.out.println(" " + titulo);

@@ -19,8 +19,6 @@ public class MenuInventario{
         }
     }
 
-    // Pendiente a implementar opcion 11 hasta 13
-
     private void mostrarMenu(){
         System.out.println("\n ========== MENU INVENTARIO LETRAS ==========");
         System.out.println("1. Crear nuevo inventario");
@@ -68,8 +66,12 @@ public class MenuInventario{
                 encriptarPalabra();
             }else if (opcion == 10){
                 desencriptarPalabra();
-            }else if(opcion == 11 || opcion == 12 || opcion == 13){
-                System.out.println("Opcion aun no disponible.");
+            }else if(opcion == 11 ) {
+                sumarInventarios();
+            }else if(opcion == 12) {
+                restarInventarios();
+            }else if(opcion == 13){
+                amplificarInventario();
             }else if(opcion == 0){
                 System.out.println("Saliendo del programa...");
             }else{
@@ -80,9 +82,9 @@ public class MenuInventario{
         }
     }
 
-    //Hasta 10 momentaneamente ya que aun no se agrega la opcion 11, 12 y 13
+
     private boolean opcionNecesitaInventario(int opcion){
-        return opcion >= 2 && opcion <= 10;
+        return opcion >= 2 && opcion <= 13;
     }
 
     private boolean noHayInventario(){
@@ -128,12 +130,12 @@ public class MenuInventario{
     }
 
     private void encriptarLetra(){
-        char letra = leerCaracter("Ingrese una letra para encriptar: ");
+        char letra = leerCaracter("Ingrese una letra para encriptar (a - z, acepta mayusculas): ");
         System.out.println("Resultado: " + inventarioActual.encriptarCesar(letra));
     }
 
     private void desencriptarLetra(){
-        char letra = leerCaracter("Ingrese una letra para  (a - z, acepta mayusculas): ");
+        char letra = leerCaracter("Ingrese una letra para desencriptar (a - z, acepta mayusculas): ");
         System.out.println("Resultado: " + inventarioActual.desencriptarCesar(letra));
     }
 
@@ -190,6 +192,42 @@ public class MenuInventario{
                 System.out.println("Debe ingresar un numero entero.");
             }
         }
+    }
+
+    private void sumarInventarios(){
+        System.out.println("Ingrese el texto para el segundo inventario: ");
+        String text = scanner.nextLine();
+
+        InventarioLetras inventario2 = new InventarioLetras(text);
+        InventarioLetras inventarioFinal = inventarioActual.add(inventario2);
+
+        System.out.println("Inventario 1: " + inventarioActual);
+        System.out.println("Inventario 2: " + inventario2);
+        System.out.println("Suma: " + inventarioFinal);
+
+    }
+
+    private void restarInventarios(){
+        System.out.println("Ingrese el texto para el segundo inventario: ");
+        String text = scanner.nextLine();
+
+        InventarioLetras inventario2 = new InventarioLetras(text);
+        InventarioLetras inventarioFinal = inventarioActual.subtract(inventario2);
+
+        if(inventarioFinal == null ){
+            System.out.println("No es posible realizar la resta, quedan valores negativos.");
+        }else{
+            System.out.println("Resta: " + inventarioFinal);
+        }
+    }
+
+    private void amplificarInventario(){
+        int factor = leerEntero("Ingrese el factor de amplificacion (0 o entero positivo): ");
+
+        InventarioLetras inventarioFinal = inventarioActual.amplifies(factor);
+
+        System.out.println("Original: " + inventarioActual);
+        System.out.println("Amplificado por " + factor + ": " + inventarioFinal);
     }
 
 

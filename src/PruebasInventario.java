@@ -1,4 +1,15 @@
+/**
+ * Conjunto de pruebas manuales para verificar InventarioLetras.
+ *
+ * Evalua creacion de inventario, consultas, modificacion de cantidades,
+ * cifrado Cesar y operaciones entre inventarios.
+ */
+
 public class PruebasInventario{
+
+    /**
+     * Ejecuta los casos de prueba definidos para el proyecto.
+     */
 
     public static void ejecutarPruebas(){
 
@@ -251,6 +262,12 @@ public class PruebasInventario{
         System.out.println("RESULTADO: " + inventarioAmplificadoPor1);
 
     }
+
+    /**
+     * Imprime un separador visual para organizar la salida de las pruebas.
+     *
+     * @param titulo titulo del caso de prueba o seccion.
+     */
 
     public static void separador(String titulo) {
         System.out.println("\n===============");

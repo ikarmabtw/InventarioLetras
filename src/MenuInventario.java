@@ -1,13 +1,28 @@
 import java.util.Scanner;
 
+/**
+ * Menu Interactivo por consola para trabajar con InventarioLetras.
+ *
+ * Permite crear inventarios, consultar cantidades, modificar valores,
+ * aplicar cifrado Cesar y realizar operaciones entre inventarios.
+ */
 public class MenuInventario{
     private final Scanner scanner;
     private InventarioLetras inventarioActual;
+
+    /**
+     * Crea un menu sin inventario inicial.
+     */
+
 
     public MenuInventario(){
         scanner = new Scanner(System.in);
         inventarioActual = null;
     }
+
+    /**
+     * Inicia el ciclo principal del menu hasta que el usuario decida salir.
+     */
 
     public void iniciarMenu(){
         int opcion = -1;

@@ -21,7 +21,7 @@ InventarioLetras/
 └── PruebasInventario.java #Casos de prueba manuales
 ```
 
-### Funcionalidades 
+## Funcionalidades 
 
 ### Inventario
 
@@ -41,7 +41,7 @@ InventarioLetras/
 |`char encriptarCesar(char letra)` | Encripta la letra con desplazamiento fijo de 3|
 |`char desencriptarCesar(char letra)` | Desencripta la letra con desplazamiento fijo de 3|
 |`String encriptarPalabra(String palabra, int desplazamiento)` | Encripta la palabra o frase que se ingrese con el desplazamiento ingresado|
-|`char encriptarCesar(String palabra, int desplazamiento)` | Desencripta la palabra o frase que se ingrese con el desplazamiento ingresado|
+|`String DesencriptarCesar(String palabra, int desplazamiento)` | Desencripta la palabra o frase que se ingrese con el desplazamiento ingresado|
 
 ### Operaciones entre inventarios
 
@@ -58,7 +58,7 @@ InventarioLetras/
 ```java
 InventarioLetras inventario = new InventarioLetras("James Gosling");
 
-inventario.get('a); // 1
+inventario.get('a'); // 1
 inventario.size(); // 12
 inventario.isEmpty(); // false
 System.out.println(inventario); // [aeggijlmnoss]
@@ -85,7 +85,7 @@ Permite interactuar con el inventario desde la consola.
 
 ---
 
-## Desiciones de Diseño
+## Decisiones de Diseño
 - El arreglo interno `inventario` tiene siempre exactamente 26 posiciones, una por letra del alfabeto. Garantizando esto acceso O(1) para cualquier consulta.
 - El metodo `subtract` retorna `null` en lugar de lanzar una excepción cuando la resta es invalida permitiendo manejar el caso sin necesidad de un bloque `try-catch`.
 - El cifrado César usa `Math.floorMod` en lugar del operador `%` para manejar correctamente si alguien ingresa desplazamientos negativos sin producir indices negativos (no deberia en este proyecto).
